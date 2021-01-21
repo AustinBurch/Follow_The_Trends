@@ -5,7 +5,7 @@ import pandas as pd
 
 def scrape_reddit():
         try:
-                reddit = praw.Reddit(client_id='R9i7CwdKGcvMGA', client_secret='QzHIp-GVvvPAuyIqAIF2MR5_YSrwVg', user_agent='Folow_The_Trends')
+                reddit = praw.Reddit(client_id='id', client_secret='secret', user_agent='Folow_The_Trends')
                 hot_posts = []
                 for posts in reddit.subreddit('StockMarket').hot(limit=20):
                         hot_posts.append([posts.title,posts.selftext])
