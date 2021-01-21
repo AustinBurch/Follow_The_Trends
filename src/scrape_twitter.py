@@ -4,10 +4,10 @@ import pandas as pd
 
 def scrape_twitter():
 
-    consumer_key = "YyVPbobyuRbJ8t9sS0VVDIkhw"
-    consumer_secret = "ze5z1IkU6TWDi65hfHpKj9fsFBgjObFhNvTVk4S1zA6ERlQrk6"
-    access_token = "917858269095489538-5mfEafKMMtdo6gq10ZTyuRFBxuQqIpI"
-    access_token_secret = "UMmjH71sxivCF3yEztcBGW4ZY1ZtM5CCy8hGEKwM9Cx0a"
+    consumer_key = "consumer"
+    consumer_secret = "secret"
+    access_token = "token"
+    access_token_secret = "token_secret"
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
