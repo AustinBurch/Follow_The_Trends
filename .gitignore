@@ -1,0 +1,5 @@
+src/config.py
+src/__pycache__
+reddit_info.txt
+twitter_info.txt
+src/connect_db.py 
