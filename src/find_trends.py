@@ -6,13 +6,14 @@ def match_tickers(file, stock_dict):
     
     stock_failure = 0
     with open(file) as csv_file:
+        print("opening files")
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             if file == 'reddit_info.txt':
                 match = re.findall('\$([A-Z]+)',row[2])
             else:
                 match = re.findall('\$([A-Z]+)',row[1])
-                
+            
             if match:
                 i = 0
                 
@@ -22,7 +23,6 @@ def match_tickers(file, stock_dict):
                         r = requests.get(search)
                         info = r.json()
                         name = info['result'][0]['description']
-                        
                         stock_dict[match[i]] = name 
                         stock_failure = 0
                         i += 1
@@ -37,14 +37,22 @@ def match_tickers(file, stock_dict):
 if __name__ == '__main__':
 
     try:
+        '''
         scrape_twitter()
         scrape_reddit()
+        '''
+        print("scrape successful")
         stock_dict = match_tickers('reddit_info.txt', {})
-        print(stock_dict)
+        stock_dict = match_tickers('twitter_info.txt', stock_dict)
+        if len(stock_dict) == 0:
+            print("No tickers found")
+        
         #time.sleep(60)
         #stock_dict = match_tickers('twitter_info.txt', stock_dict)
+        
         for key, value in stock_dict.items():
-            analysis.get_candles(key)
+            print(key)
+            analysis.get_candles(key, value)
         
     except BaseException as e:
         print('failed scrape,', str(e))
