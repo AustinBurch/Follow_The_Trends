@@ -13,11 +13,11 @@ def match_tickers(file, stock_dict):
                 match = re.findall('\$([A-Z]+)',row[2])
             else:
                 match = re.findall('\$([A-Z]+)',row[1])
-            
+                
             if match:
                 i = 0
-                
                 while (i < len(match)):
+                    
                     try:
                         search = 'https://finnhub.io/api/v1/search?q=' + match[i] + '&token=' + config.finnhub_key
                         r = requests.get(search)
@@ -27,8 +27,8 @@ def match_tickers(file, stock_dict):
                         stock_failure = 0
                         i += 1
                     except ValueError:
-                        print("FinnHub Back-end Error, Attempting to Fix")  # An error occurred on Yahoo Finance's back-end. We will attempt to retreive the data again
-                        if stock_failure > 5:  # Move on to the next ticker if the current ticker fails more than 5 times
+                        print("FinnHub Back-end Error, Attempting to Fix")  # An error occurred on Finnhub's back-end. We will attempt to retreive the data again
+                        if stock_failure > 3:  # Move on to the next ticker if the current ticker fails more than 3 times
                             i += 1
                         stock_failure += 1
                     time.sleep(1)    
@@ -37,13 +37,13 @@ def match_tickers(file, stock_dict):
 if __name__ == '__main__':
 
     try:
-        '''
-        scrape_twitter()
-        scrape_reddit()
-        '''
+        
+        #scrape_twitter()
+        #scrape_reddit()
+        
         print("scrape successful")
-        stock_dict = match_tickers('reddit_info.txt', {})
-        stock_dict = match_tickers('twitter_info.txt', stock_dict)
+        #stock_dict = match_tickers('reddit_info.txt', {})
+        stock_dict = match_tickers('twitter_info.txt', {})
         if len(stock_dict) == 0:
             print("No tickers found")
         
@@ -51,8 +51,9 @@ if __name__ == '__main__':
         #stock_dict = match_tickers('twitter_info.txt', stock_dict)
         
         for key, value in stock_dict.items():
-            print(key)
-            analysis.get_candles(key, value)
+            if key != 'DD' or key != 'YOLO':
+                print(key)
+                analysis.get_candles(key, value)
         
     except BaseException as e:
         print('failed scrape,', str(e))

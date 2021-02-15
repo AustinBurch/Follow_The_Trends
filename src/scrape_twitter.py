@@ -9,12 +9,12 @@ def scrape_twitter():
         api = tweepy.API(auth,wait_on_rate_limit=True)
 
         text_query = '#StocksToWatch'
-        max_tweets = 50
+        max_tweets = 20
 
 
         try:
                 # Creation of query method using parameters
-                tweets = tweepy.Cursor(api.search,q=text_query, count=50, result_type='recent', lang="en").items(max_tweets)
+                tweets = tweepy.Cursor(api.search,q=text_query, count=20, result_type='recent', lang="en").items(max_tweets)
 
                 # Pulling information from tweets iterable object
                 tweets_list = [[tweet.text] for tweet in tweets]
